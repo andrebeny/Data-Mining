@@ -5,13 +5,30 @@
  */
 package GUI;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.*;
 import java.io.*;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+
 /**
  *
  * @author ASUS
  */
 public class NewJFrame extends javax.swing.JFrame {
+
+    static Vector data = new Vector();
+    static Vector headers = new Vector();
+    static DefaultTableModel model = null;
+    static int tWidth = 0;
+    static int tHeight = 0;
+    JFileChooser fileChooser = new JFileChooser();
 
     /**
      * Creates new form NewJFrame
@@ -34,6 +51,8 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,24 +86,32 @@ public class NewJFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel2.setFont(new java.awt.Font("Schadow BT", 2, 8)); // NOI18N
+        jLabel2.setText("Andreas Beny K");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addComponent(pilihButton)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(openButton))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(197, 197, 197)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(openButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(pilihButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(76, 76, 76)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -94,32 +121,88 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pilihButton)
-                    .addComponent(openButton))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pilihButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(openButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(6, 6, 6))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void pilihButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilihButtonActionPerformed
-        // TODO add your handling code here:
-        final JFileChooser fc = new JFileChooser();
-        //int returnVal = fc.showOpenDialog(aComponent);
-        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        int returnValue = fc.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fc.getSelectedFile();
-            //System.out.println("we selected: " + selectedFile);
-         
+        fileChooser.showOpenDialog(null);
+
+        File file = fileChooser.getSelectedFile();
+        String dir = file.getName();
+        jTextField1.setText(dir);
+
+        if (!file.getName().endsWith("xls")) {
+            JOptionPane.showMessageDialog(null, "Format file tidak didukung. xls only", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_pilihButtonActionPerformed
 
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
         // TODO add your handling code here:
+        File file = fileChooser.getSelectedFile();
+        fillData(file);
+        model = new DefaultTableModel(data, headers);
+        tWidth = model.getColumnCount() * 150;
+        tHeight = model.getRowCount() * 25;
+        jTable1.setPreferredSize(new Dimension(tWidth, tHeight));
+        jTable1.setModel(model);
+        jTable1.setAutoCreateRowSorter(true);
+        model = new DefaultTableModel(data, headers);
+
+        jTable1.setModel(model);
+        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        jTable1.setEnabled(true);
+        jTable1.setRowHeight(25);
+        jTable1.setRowMargin(4);
+
+        tWidth = model.getColumnCount() * 150;
+        tHeight = model.getRowCount() * 25;
+        jTable1.setPreferredSize(new Dimension(tWidth, tHeight));
+
+
     }//GEN-LAST:event_openButtonActionPerformed
+
+    void fillData(File file) {
+
+        Workbook workbook = null;
+        try {
+            try {
+                workbook = Workbook.getWorkbook(file);
+            } catch (IOException ex) {
+                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Sheet sheet = workbook.getSheet(0);
+
+            headers.clear();
+            for (int i = 0; i < sheet.getColumns(); i++) {
+                jxl.Cell cell1 = sheet.getCell(i, 0);
+                headers.add(cell1.getContents());
+            }
+
+            data.clear();
+            for (int j = 1; j < sheet.getRows(); j++) {
+                Vector d = new Vector();
+                for (int i = 0; i < sheet.getColumns(); i++) {
+                    jxl.Cell cell = sheet.getCell(i, j);
+                    d.add(cell.getContents());
+                }
+                d.add("\n");
+                data.add(d);
+            }
+        } catch (BiffException e) {
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -158,8 +241,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton openButton;
     private javax.swing.JButton pilihButton;
     // End of variables declaration//GEN-END:variables
