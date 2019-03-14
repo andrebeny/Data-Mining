@@ -143,7 +143,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jTextField1.setText(dir);
 
         if (!file.getName().endsWith("xls")) {
-            JOptionPane.showMessageDialog(null, "Format file tidak didukung. xls only", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "File Format doesn't support. Please select xls file format only! ", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_pilihButtonActionPerformed
