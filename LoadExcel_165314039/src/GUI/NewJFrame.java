@@ -100,19 +100,20 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(openButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(pilihButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(76, 76, 76)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(openButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pilihButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(295, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,8 +154,8 @@ public class NewJFrame extends javax.swing.JFrame {
         File file = fileChooser.getSelectedFile();
         fillData(file);
         model = new DefaultTableModel(data, headers);
-        tWidth = model.getColumnCount() * 150;
-        tHeight = model.getRowCount() * 25;
+        tWidth = model.getColumnCount() * 200;
+        tHeight = model.getRowCount() * 150;
         jTable1.setPreferredSize(new Dimension(tWidth, tHeight));
         jTable1.setModel(model);
         jTable1.setAutoCreateRowSorter(true);
@@ -166,23 +167,22 @@ public class NewJFrame extends javax.swing.JFrame {
         jTable1.setRowHeight(25);
         jTable1.setRowMargin(4);
 
-        tWidth = model.getColumnCount() * 150;
-        tHeight = model.getRowCount() * 25;
+        tWidth = model.getColumnCount() * 200;
+        tHeight = model.getRowCount() * 150;
         jTable1.setPreferredSize(new Dimension(tWidth, tHeight));
-
 
     }//GEN-LAST:event_openButtonActionPerformed
 
     void fillData(File file) {
 
-        Workbook workbook = null;
+        Workbook WB = null;
         try {
             try {
-                workbook = Workbook.getWorkbook(file);
+                WB = Workbook.getWorkbook(file);
             } catch (IOException ex) {
                 Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Sheet sheet = workbook.getSheet(0);
+            Sheet sheet = WB.getSheet(0);
 
             headers.clear();
             for (int i = 0; i < sheet.getColumns(); i++) {
